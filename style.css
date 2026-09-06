@@ -1,1 +1,47 @@
-*{box-sizing:border-box}html,body{margin:0;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}body{display:flex;justify-content:center}.app-shell{width:min(100%,520px);min-height:100vh;background:#000;position:relative;overflow:hidden}.topbar{height:72px;display:grid;grid-template-columns:52px 1fr 52px;align-items:center;border-bottom:1px solid #171717;padding:0 14px}.title{text-align:center;font-size:18px;font-weight:700;letter-spacing:.6px}.menu-button{border:0;background:transparent;color:white;font-size:30px;cursor:pointer}.station-logo{display:block;width:min(76vw,360px);height:auto;aspect-ratio:1/1;object-fit:cover;margin:28px auto 22px;background:#111}.home{padding:0 22px 34px}.listen-button{display:block;width:100%;max-width:390px;margin:0 auto;border:0;border-radius:6px;padding:18px;background:#b08a31;color:#fff;font-size:20px;font-weight:700;cursor:pointer}.status{text-align:center;color:#8e8e8e;font-size:12px;margin:10px 0 8px}.nav-list{border-top:1px solid #1e1e1e}.nav-list a{display:grid;grid-template-columns:42px 1fr 22px;align-items:center;color:#fff;text-decoration:none;min-height:62px;border-bottom:1px solid #1e1e1e;font-size:17px}.nav-list a span:first-child{font-size:22px;text-align:center}.nav-list a b{text-align:right;font-size:27px;font-weight:300;color:#bbb}.panel{display:none;min-height:calc(100vh - 72px);padding:0 22px 30px}.panel:target{display:block}.panel-head{height:72px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;border-bottom:1px solid #1e1e1e}.panel-head h2{text-align:center;font-size:20px;margin:0}.back{color:white;text-decoration:none;font-size:34px}.schedule-row{padding:20px 6px;border-bottom:1px solid #222}.schedule-row strong{display:block;font-size:18px;margin-bottom:8px}.schedule-row span{color:#b9b9b9;font-size:15px;line-height:1.4}.about-copy{font-size:16px;line-height:1.6;color:#d0d0d0}.drawer{position:fixed;top:0;left:0;bottom:0;width:min(86vw,390px);background:#080808;z-index:20;transform:translateX(-105%);transition:.2s ease;border-right:1px solid #252525;padding:0 16px}.drawer.open{transform:translateX(0)}.drawer-head{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1f1f1f;font-size:23px}.drawer-head button{background:none;border:0;color:#fff;font-size:35px}.drawer-link{width:100%;display:grid;grid-template-columns:44px 1fr;align-items:center;min-height:60px;border:0;border-bottom:1px solid #1f1f1f;background:none;color:#fff;text-decoration:none;text-align:left;font-size:17px}.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.56);z-index:15}.scrim.show{display:block}
+*{box-sizing:border-box}
+:root{--gold:#c79a33;--blue:#148cff;--green:#00d64a;--line:#252525;--text:#fff;--muted:#c0c0c0}
+html{scroll-behavior:smooth}
+html,body{margin:0;background:#000;color:var(--text);font-family:Arial,Helvetica,sans-serif}
+body{display:flex;justify-content:center}
+.app{width:min(100%,720px);min-height:100vh;background:#000;padding-bottom:88px}
+.topbar{height:70px;display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #222}
+.menu-btn{background:none;border:0;color:var(--gold);font-size:34px;cursor:pointer}
+.stations{padding:0 22px}
+.station-card{display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:24px;padding:38px 4px;border-bottom:1px solid #333;align-items:center}
+.station-logo{width:100%;max-width:290px;display:block;object-fit:contain;background:#000}
+.station-info h1{margin:0 0 18px;font-size:clamp(24px,5vw,38px);line-height:1}
+.station-info p{margin:0 0 22px;color:#c9c9c9;font-size:clamp(17px,3.4vw,24px);line-height:1.45}
+.listen{width:100%;border:0;border-radius:4px;padding:16px 14px;font-size:clamp(17px,3.5vw,25px);font-weight:800;cursor:pointer}
+.listen.dj{background:var(--gold);color:#050505}
+.listen.strobe{background:var(--blue);color:#fff}
+.listen.pulse{background:var(--green);color:#fff}
+.listen.playing{outline:3px solid #fff;outline-offset:2px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+.links a{padding:12px 8px;text-align:center;text-decoration:none;color:#fff;border:1px solid var(--gold);border-radius:3px;font-size:16px}
+.strobe-links a{border-color:var(--blue)}
+.pulse-links a{border-color:var(--green)}
+.page-section{padding:34px 26px;border-top:1px solid #222}
+.page-section h2{font-size:28px;margin:0 0 24px}
+.page-section p{color:#d0d0d0;font-size:17px;line-height:1.6}
+.schedule-item{padding:18px 0;border-bottom:1px solid #252525}
+.schedule-item strong,.schedule-item span{display:block}
+.schedule-item strong{font-size:18px;margin-bottom:7px}.schedule-item span{color:#bbb}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,720px);height:78px;background:#050505;border-top:1px solid #333;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}
+.bottom-nav a{color:#fff;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:21px;gap:4px}
+.bottom-nav span{font-size:10px;text-transform:uppercase}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(84vw,390px);background:#080808;z-index:30;transform:translateX(-103%);transition:.2s ease;padding:0 18px}
+.drawer.open{transform:translateX(0)}
+.drawer-head{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222;font-size:23px}
+.drawer-head button{background:none;border:0;color:var(--gold);font-size:36px}
+.drawer>a{display:flex;gap:18px;align-items:center;min-height:62px;border-bottom:1px solid #222;color:#fff;text-decoration:none;font-size:17px}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:20}
+.scrim.show{display:block}
+.player-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:78px;width:min(100%,720px);background:#111;border-top:1px solid #333;padding:10px 16px;z-index:12;display:flex;align-items:center;justify-content:space-between}
+.player-bar div{display:flex;flex-direction:column;gap:3px}
+.player-bar span{font-size:12px;color:#aaa}
+.player-bar button{border:1px solid #555;background:#000;color:#fff;border-radius:50%;width:42px;height:42px;font-size:18px}
+@media(max-width:560px){
+ .station-card{grid-template-columns:42% 1fr;gap:16px;padding:28px 0}
+ .links{grid-template-columns:1fr 1fr}
+ .bottom-nav span{font-size:9px}
+}

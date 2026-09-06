@@ -1,7 +1,7 @@
 {
   "name": "DJ Perry Radio",
   "short_name": "DJ Perry",
-  "description": "Listen live to DJ Perry Radio.",
+  "description": "Listen to DJ Perry Radio, The Strobe Radio, and Pulse 107.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
