@@ -1,4 +1,4 @@
-const CACHE = "dj-perry-three-stations-v3-configured";
+const CACHE = "dj-perry-three-stations-v4-install-button";
 const ASSETS = [
   "./",
   "./index.html",

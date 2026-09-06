@@ -46,3 +46,13 @@ GITHUB UPDATE
 
 IMPORTANT
 Do not upload the ZIP itself into the repository. Upload the files inside it.
+
+
+INSTALL APP BUTTON
+This version adds an Install App button near the top of the app.
+- Android/Chrome/Edge: uses the browser's native PWA install prompt when available.
+- iPhone/iPad: shows simple Safari Add to Home Screen instructions.
+- If the app is already installed, the install button hides automatically.
+
+UPLOAD TO GITHUB
+Upload every file from this ZIP to the root of the existing repository and replace matching files.

@@ -206,6 +206,98 @@ document.getElementById("closeMenu").addEventListener("click", closeDrawer);
 scrim.addEventListener("click", closeDrawer);
 document.querySelectorAll(".drawer a").forEach(a => a.addEventListener("click", closeDrawer));
 
+
+
+// ----- PWA install button -----
+let deferredInstallPrompt = null;
+const installButton = document.getElementById("installAppButton");
+const installHelp = document.getElementById("installHelp");
+const installModal = document.getElementById("installModal");
+const closeInstallModal = document.getElementById("closeInstallModal");
+const installInstructions = document.getElementById("installInstructions");
+
+function isStandaloneMode() {
+  return window.matchMedia("(display-mode: standalone)").matches ||
+         window.navigator.standalone === true;
+}
+
+function isIOSDevice() {
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+}
+
+function showInstallInstructions() {
+  const isIOS = isIOSDevice();
+
+  if (isIOS) {
+    installInstructions.innerHTML = `
+      <p>On iPhone or iPad:</p>
+      <ol>
+        <li>Open this page in <strong>Safari</strong>.</li>
+        <li>Tap the <strong>Share</strong> button.</li>
+        <li>Choose <strong>Add to Home Screen</strong>.</li>
+        <li>Tap <strong>Add</strong>.</li>
+      </ol>`;
+  } else {
+    installInstructions.innerHTML = `
+      <p>Your browser did not show the automatic install prompt.</p>
+      <p>Open the browser menu and look for <strong>Install app</strong> or <strong>Add to Home screen</strong>.</p>`;
+  }
+
+  installModal.hidden = false;
+}
+
+function updateInstallUI() {
+  if (isStandaloneMode()) {
+    installButton.hidden = true;
+    installHelp.textContent = "App installed on this device.";
+  }
+}
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installButton.hidden = false;
+  installHelp.textContent = "Tap Install App to add DJ Perry Radio to your device.";
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  installButton.hidden = true;
+  installHelp.textContent = "App installed on this device.";
+});
+
+installButton.addEventListener("click", async () => {
+  if (isStandaloneMode()) {
+    installButton.hidden = true;
+    installHelp.textContent = "App installed on this device.";
+    return;
+  }
+
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    try {
+      await deferredInstallPrompt.userChoice;
+    } catch {}
+    deferredInstallPrompt = null;
+    updateInstallUI();
+    return;
+  }
+
+  showInstallInstructions();
+});
+
+closeInstallModal.addEventListener("click", () => {
+  installModal.hidden = true;
+});
+installModal.addEventListener("click", event => {
+  if (event.target === installModal) installModal.hidden = true;
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") installModal.hidden = true;
+});
+
+updateInstallUI();
+
 // Register the service worker.
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

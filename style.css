@@ -53,3 +53,74 @@ body{display:flex;justify-content:center}
 .metadata-iframes iframe{width:1px;height:1px;border:0}
 .player-bar div{min-width:0}
 #currentTrack{max-width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ddd;font-size:13px}
+
+
+.install-panel{
+  padding:6px 18px 18px;
+  text-align:center;
+}
+.install-app-button{
+  appearance:none;
+  border:1px solid #d1a73b;
+  background:#d1a73b;
+  color:#000;
+  font-weight:800;
+  letter-spacing:.4px;
+  border-radius:10px;
+  padding:12px 20px;
+  min-width:170px;
+  cursor:pointer;
+}
+.install-app-button:active{transform:translateY(1px)}
+.install-app-button[hidden]{display:none !important}
+.install-help{
+  margin:8px 0 0;
+  color:#8d8d8d;
+  font-size:12px;
+}
+.install-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,.72);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.install-modal[hidden]{display:none}
+.install-modal-card{
+  position:relative;
+  width:min(92vw,420px);
+  background:#111;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:22px;
+  color:#fff;
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
+}
+.install-modal-card h2{
+  margin:0 36px 14px 0;
+  font-size:20px;
+}
+.install-modal-card p{
+  margin:8px 0;
+  color:#d7d7d7;
+  line-height:1.45;
+}
+.install-modal-card ol{
+  margin:10px 0 0 20px;
+  padding:0;
+  color:#d7d7d7;
+}
+.install-modal-card li{margin:8px 0}
+.install-modal-close{
+  position:absolute;
+  right:12px;
+  top:10px;
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:28px;
+  cursor:pointer;
+}
