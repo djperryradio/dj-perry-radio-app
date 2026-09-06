@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="DJ Perry Radio">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="style.css">
+<title>DJ Perry Radio</title></head>
+<body><main class="app-shell">
+<header class="topbar"><button class="menu-button" id="menuButton">☰</button><div class="title">DJ PERRY RADIO</div><div></div></header>
+<section class="home">
+<img class="station-logo" src="dj-perry-logo.jpg" alt="DJ Perry Radio logo">
+<button id="playButton" class="listen-button">▶ LISTEN LIVE</button>
+<p id="statusText" class="status">Ready to listen</p>
+<div class="nav-list">
+<a href="#schedule"><span>▣</span><span>Show Schedule</span><b>›</b></a>
+<a href="https://hearthis.at/htlhmdjc/" target="_blank"><span>♪</span><span>Mixes</span><b>›</b></a>
+<a href="https://www.facebook.com/djperry.net" target="_blank"><span>f</span><span>Facebook</span><b>›</b></a>
+<a href="#about"><span>i</span><span>About</span><b>›</b></a>
+<a href="https://www.djperryradio.com/" target="_blank"><span>✉</span><span>Contact</span><b>›</b></a>
+</div></section>
+
+<section id="schedule" class="panel">
+<div class="panel-head"><a href="#" class="back">‹</a><h2>Show Schedule</h2></div>
+<div class="schedule-row"><strong>DJ Perry's Old School Mix</strong><span>Daily • 11 AM & 7 PM PT</span></div>
+<div class="schedule-row"><strong>DJ Perry's House Sessions</strong><span>Mon–Thu 5:30 PM PT • Fri/Sat 4:30 PM PT</span></div>
+<div class="schedule-row"><strong>Wayback Wednesdays</strong><span>All day Wednesday</span></div>
+<div class="schedule-row"><strong>Saturday Night Retro Dance Party</strong><span>Saturday • 5 PM–Midnight PT</span></div>
+<div class="schedule-row"><strong>Mixes (hearthis.at)</strong><span>On demand</span></div>
+</section>
+
+<section id="about" class="panel">
+<div class="panel-head"><a href="#" class="back">‹</a><h2>About</h2></div>
+<div class="about-copy"><p>DJ Perry Radio streams DJ Perry's mixes, house sessions, old-school sets, retro shows and more.</p>
+<p>Visit DJPerryRadio.com for station information, mixes and updates.</p></div></section>
+
+<aside id="drawer" class="drawer">
+<div class="drawer-head"><span>Menu</span><button id="closeMenu">×</button></div>
+<a href="#" class="drawer-link">⌂ <span>Home</span></a>
+<button class="drawer-link" id="drawerListen">◉ <span>Listen Live</span></button>
+<a href="#schedule" class="drawer-link">▣ <span>Show Schedule</span></a>
+<a href="https://hearthis.at/htlhmdjc/" target="_blank" class="drawer-link">♪ <span>Mixes</span></a>
+<a href="https://www.facebook.com/djperry.net" target="_blank" class="drawer-link">f <span>Facebook</span></a>
+<a href="#about" class="drawer-link">i <span>About</span></a>
+<a href="https://www.djperryradio.com/" target="_blank" class="drawer-link">✉ <span>Contact</span></a>
+</aside><div id="scrim" class="scrim"></div>
+<audio id="radioAudio" preload="none" playsinline></audio>
+</main><script src="app.js"></script></body></html>
