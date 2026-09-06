@@ -1,38 +1,48 @@
-DJ PERRY RADIO — THREE-STATION GITHUB PACKAGE
+DJ PERRY RADIO — CONFIGURED THREE-STATION APP
 
-This version combines:
-1. DJ Perry Radio
-2. The Strobe Radio
-3. Pulse 107
+This version is configured for:
+- DJ Perry Radio
+- The Strobe Radio
+- Pulse 107
 
-DIRECT HTTPS STREAMS
+NOW PLAYING
+The app loads each station's official CloudRadio streaminfo.js separately:
 DJ Perry Radio:
-https://audio.cloudrad.io/ef8751af/live
+https://public.cloudrad.io/ef8751af/live/streaminfo.js
 
 The Strobe Radio:
-https://audio.cloudrad.io/ac7b42b9/live
+https://public.cloudrad.io/ac7b42b9/live/streaminfo.js
 
 Pulse 107:
-https://audio.cloudrad.io/c80559c5/live
+https://public.cloudrad.io/c80559c5/live/streaminfo.js
 
-UPLOAD / UPDATE EXISTING GITHUB REPOSITORY
+The current CloudRadio song text is passed into the main app and appears:
+- in the station's NOW PLAYING area
+- in the bottom player when that station is active
+- in supported phone/browser media controls
+
+ONE STREAM AT A TIME
+The app has exactly ONE HTML audio element.
+Before a different station starts, it:
+1. pauses the old stream
+2. removes the old stream URL
+3. resets the audio element
+4. assigns the new stream
+5. starts the new station
+
+It also uses a switch token so rapidly tapping different stations cannot leave an older pending play request active.
+
+GITHUB UPDATE
 1. Extract this ZIP.
-2. Open your existing GitHub repository: djperryradio/dj-perry-radio-app
-3. Upload ALL files from this package into the ROOT of the repository.
-4. Replace files with matching names.
-5. Commit changes.
-6. Keep GitHub Pages set to: main / (root)
-7. Wait a few minutes and refresh:
+2. Open:
+   https://github.com/djperryradio/dj-perry-radio-app
+3. Choose Add file > Upload files.
+4. Upload every individual file from the extracted folder into the repository root.
+5. Replace matching files.
+6. Commit changes.
+7. Leave GitHub Pages set to main / root.
+8. Wait a few minutes, then open:
    https://djperryradio.github.io/dj-perry-radio-app/
 
 IMPORTANT
-Upload the individual files, not only the ZIP.
-
-If an old version still appears, refresh the GitHub Pages URL in Chrome. If necessary, clear site data for the GitHub Pages site.
-
-DESIGN
-DJ Perry Radio Listen Live = gold
-The Strobe Radio Listen Live = blue
-Pulse 107 Listen Live = green
-
-Each station includes its own Facebook and Website buttons.
+Do not upload the ZIP itself into the repository. Upload the files inside it.

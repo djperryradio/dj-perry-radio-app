@@ -45,3 +45,11 @@ body{display:flex;justify-content:center}
  .links{grid-template-columns:1fr 1fr}
  .bottom-nav span{font-size:9px}
 }
+
+.now-playing{margin:0 0 16px;padding:10px 0;border-top:1px solid #222;border-bottom:1px solid #222}
+.now-playing span{display:block;font-size:10px;letter-spacing:1.3px;color:#888;margin-bottom:5px}
+.now-playing strong{display:block;font-size:14px;line-height:1.35;color:#fff;font-weight:600}
+.metadata-iframes{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%)}
+.metadata-iframes iframe{width:1px;height:1px;border:0}
+.player-bar div{min-width:0}
+#currentTrack{max-width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ddd;font-size:13px}

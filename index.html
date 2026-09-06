@@ -26,6 +26,10 @@
       <div class="station-info">
         <h1>DJ PERRY RADIO</h1>
         <p>DJ Perry Mixes<br>Wayback Wednesdays<br>Saturday Night Retro Dance Party</p>
+        <div class="now-playing">
+          <span>NOW PLAYING</span>
+          <strong id="np-dj">Loading song info…</strong>
+        </div>
         <button class="listen dj" data-station="dj">▶ LISTEN LIVE</button>
         <div class="links">
           <a href="https://www.facebook.com/djperry.net" target="_blank" rel="noopener">Facebook</a>
@@ -39,6 +43,10 @@
       <div class="station-info">
         <h1>THE STROBE RADIO</h1>
         <p>Old School<br>Funk<br>Disco<br>Freestyle<br>R&amp;B</p>
+        <div class="now-playing">
+          <span>NOW PLAYING</span>
+          <strong id="np-strobe">Loading song info…</strong>
+        </div>
         <button class="listen strobe" data-station="strobe">▶ LISTEN LIVE</button>
         <div class="links strobe-links">
           <a href="https://www.facebook.com/thestroberadio" target="_blank" rel="noopener">Facebook</a>
@@ -52,6 +60,10 @@
       <div class="station-info">
         <h1>PULSE 107</h1>
         <p>House<br>NuDisco<br>Electronica<br>Dance</p>
+        <div class="now-playing">
+          <span>NOW PLAYING</span>
+          <strong id="np-pulse">Loading song info…</strong>
+        </div>
         <button class="listen pulse" data-station="pulse">▶ LISTEN LIVE</button>
         <div class="links pulse-links">
           <a href="https://www.facebook.com/pulse107" target="_blank" rel="noopener">Facebook</a>
@@ -93,15 +105,23 @@
   </aside>
 
   <div id="scrim" class="scrim"></div>
+
   <div id="playerBar" class="player-bar" hidden>
     <div>
       <strong id="currentStation">DJ Perry Radio</strong>
+      <span id="currentTrack">Loading song info…</span>
       <span id="playerStatus">Connecting…</span>
     </div>
-    <button id="pauseButton">❚❚</button>
+    <button id="pauseButton" aria-label="Pause or resume">❚❚</button>
   </div>
 
   <audio id="audio" preload="none" playsinline></audio>
+
+  <div class="metadata-iframes" aria-hidden="true">
+    <iframe src="metadata-dj.html" title="DJ Perry metadata"></iframe>
+    <iframe src="metadata-strobe.html" title="Strobe metadata"></iframe>
+    <iframe src="metadata-pulse.html" title="Pulse metadata"></iframe>
+  </div>
 </main>
 <script src="app.js"></script>
 </body>

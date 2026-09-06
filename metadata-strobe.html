@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Metadata bridge</title></head>
+<body>
+<span id="stream_info_song"></span>
+<script src="https://public.cloudrad.io/ac7b42b9/live/streaminfo.js"></script>
+<script>
+(function () {
+  const key = "strobe";
+  const el = document.getElementById("stream_info_song");
+
+  function send() {
+    const text = (el.textContent || "").trim();
+    if (text) parent.postMessage({type:"cloudradio-now-playing", station:key, text:text}, location.origin);
+  }
+
+  const observer = new MutationObserver(send);
+  observer.observe(el, {childList:true, subtree:true, characterData:true});
+  send();
+  setInterval(send, 5000);
+})();
+</script>
+</body>
+</html>
