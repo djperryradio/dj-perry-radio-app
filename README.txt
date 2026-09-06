@@ -1,58 +1,22 @@
-DJ PERRY RADIO — CONFIGURED THREE-STATION APP
+DJ PERRY RADIO — PREFERRED LAYOUT BUILD
 
-This version is configured for:
-- DJ Perry Radio
-- The Strobe Radio
-- Pulse 107
+This version keeps the black/gold stacked station layout you selected.
 
-NOW PLAYING
-The app loads each station's official CloudRadio streaminfo.js separately:
-DJ Perry Radio:
-https://public.cloudrad.io/ef8751af/live/streaminfo.js
+INCLUDED
+- DJ Perry Radio / The Strobe Radio / Pulse 107 cards using your actual logo files
+- Gold / blue / green Listen Live buttons
+- Facebook icon and Website button for each station
+- Live CloudRadio Now Playing metadata
+- Single audio player: prior stream is fully stopped before another starts
+- Media Session Artist / Title metadata for supported Bluetooth/car displays
+- Install App button
+- Centered Show Schedule with "Listen on..." station information
+- Mixes, About, Contact and side drawer
+- Contact opens email to djperry76@hotmail.com
+- PayPal Donate button in About and Donate entry in the side menu
+- Safe service worker that does not intercept CloudRadio streams
 
-The Strobe Radio:
-https://public.cloudrad.io/ac7b42b9/live/streaminfo.js
-
-Pulse 107:
-https://public.cloudrad.io/c80559c5/live/streaminfo.js
-
-The current CloudRadio song text is passed into the main app and appears:
-- in the station's NOW PLAYING area
-- in the bottom player when that station is active
-- in supported phone/browser media controls
-
-ONE STREAM AT A TIME
-The app has exactly ONE HTML audio element.
-Before a different station starts, it:
-1. pauses the old stream
-2. removes the old stream URL
-3. resets the audio element
-4. assigns the new stream
-5. starts the new station
-
-It also uses a switch token so rapidly tapping different stations cannot leave an older pending play request active.
-
-GITHUB UPDATE
-1. Extract this ZIP.
-2. Open:
-   https://github.com/djperryradio/dj-perry-radio-app
-3. Choose Add file > Upload files.
-4. Upload every individual file from the extracted folder into the repository root.
-5. Replace matching files.
-6. Commit changes.
-7. Leave GitHub Pages set to main / root.
-8. Wait a few minutes, then open:
-   https://djperryradio.github.io/dj-perry-radio-app/
-
-IMPORTANT
-Do not upload the ZIP itself into the repository. Upload the files inside it.
-
-
-INSTALL APP BUTTON
-This version adds an Install App button near the top of the app.
-- Android/Chrome/Edge: uses the browser's native PWA install prompt when available.
-- iPhone/iPad: shows simple Safari Add to Home Screen instructions.
-- If the app is already installed, the install button hides automatically.
-
-UPLOAD TO GITHUB
-Upload every file from this ZIP to the root of the existing repository and replace matching files.
+GITHUB
+Extract this ZIP and upload ALL individual files to the ROOT of:
+https://github.com/djperryradio/dj-perry-radio-app
+Replace matching files and commit. Keep GitHub Pages set to main / root.

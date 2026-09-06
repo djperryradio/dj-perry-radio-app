@@ -13,115 +13,94 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app">
-
+<div class="app-shell">
   <header class="topbar">
-    <button id="menuButton" class="menu-btn" aria-label="Open menu">☰</button>
+    <button id="menuButton" class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <button id="installAppButton" class="top-install" type="button">⬇ Install App</button>
   </header>
 
-  <section class="install-panel" id="installPanel">
-    <button id="installAppButton" class="install-app-button" type="button">
-      ⬇ Install App
-    </button>
-    <p id="installHelp" class="install-help">Add DJ Perry Radio to your device for quick access.</p>
-  </section>
-
-  <section id="stations" class="stations">
-
-    <article class="station-card dj-card">
-      <img src="djperry-logo.png" alt="DJ Perry Radio logo" class="station-logo">
-      <div class="station-info">
-        <h1>DJ PERRY RADIO</h1>
-        <p>DJ Perry Mixes<br>Wayback Wednesdays<br>Saturday Night Retro Dance Party</p>
-        <div class="now-playing">
-          <span>NOW PLAYING</span>
-          <strong id="np-dj">Loading song info…</strong>
+  <main>
+    <section id="stations" class="stations">
+      <article class="station-card dj-card">
+        <img src="djperry-logo.png" alt="DJ Perry Radio logo" class="station-logo">
+        <div class="station-content">
+          <h1>DJ PERRY RADIO</h1>
+          <p class="genres">DJ Perry Mixes<br>Wayback Wednesdays<br>Saturday Night Retro<br>Dance Party</p>
+          <div class="now-playing"><span>NOW PLAYING</span><strong id="np-dj">Waiting for song information…</strong></div>
+          <button class="listen dj" data-station="dj">▶ <b>LISTEN LIVE</b></button>
+          <div class="station-links">
+            <a class="social dj-border" href="https://www.facebook.com/djperry.net" target="_blank" rel="noopener" aria-label="DJ Perry Radio on Facebook"><span class="facebook-icon">f</span><span>Facebook</span></a>
+            <a class="website dj-border" href="https://sites.google.com/view/djperryradio" target="_blank" rel="noopener"><span class="globe">◎</span><span>Website</span></a>
+          </div>
         </div>
-        <button class="listen dj" data-station="dj">▶ LISTEN LIVE</button>
-        <div class="links">
-          <a href="https://www.facebook.com/djperry.net" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://sites.google.com/view/djperryradio" target="_blank" rel="noopener">Website</a>
+      </article>
+
+      <article class="station-card strobe-card">
+        <img src="strobe-logo.jpg" alt="The Strobe Radio logo" class="station-logo">
+        <div class="station-content">
+          <h1>THE STROBE RADIO</h1>
+          <p class="genres">Old School<br>Funk<br>Disco<br>Freestyle<br>R&amp;B</p>
+          <div class="now-playing"><span>NOW PLAYING</span><strong id="np-strobe">Waiting for song information…</strong></div>
+          <button class="listen strobe" data-station="strobe">▶ <b>LISTEN LIVE</b></button>
+          <div class="station-links">
+            <a class="social strobe-border" href="https://www.facebook.com/thestroberadio" target="_blank" rel="noopener" aria-label="The Strobe Radio on Facebook"><span class="facebook-icon">f</span><span>Facebook</span></a>
+            <a class="website strobe-border" href="https://sites.google.com/view/djperryradio/the-strobe-radio" target="_blank" rel="noopener"><span class="globe">◎</span><span>Website</span></a>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <article class="station-card strobe-card">
-      <img src="strobe-logo.jpg" alt="The Strobe Radio logo" class="station-logo">
-      <div class="station-info">
-        <h1>THE STROBE RADIO</h1>
-        <p>Old School<br>Funk<br>Disco<br>Freestyle<br>R&amp;B</p>
-        <div class="now-playing">
-          <span>NOW PLAYING</span>
-          <strong id="np-strobe">Loading song info…</strong>
+      <article class="station-card pulse-card">
+        <img src="pulse107-logo.jpg" alt="Pulse 107 logo" class="station-logo">
+        <div class="station-content">
+          <h1>PULSE 107</h1>
+          <p class="genres">House<br>NuDisco<br>Electronica<br>Dance</p>
+          <div class="now-playing"><span>NOW PLAYING</span><strong id="np-pulse">Waiting for song information…</strong></div>
+          <button class="listen pulse" data-station="pulse">▶ <b>LISTEN LIVE</b></button>
+          <div class="station-links">
+            <a class="social pulse-border" href="https://www.facebook.com/pulse107" target="_blank" rel="noopener" aria-label="Pulse 107 on Facebook"><span class="facebook-icon">f</span><span>Facebook</span></a>
+            <a class="website pulse-border" href="https://sites.google.com/view/djperryradio/pulse-107" target="_blank" rel="noopener"><span class="globe">◎</span><span>Website</span></a>
+          </div>
         </div>
-        <button class="listen strobe" data-station="strobe">▶ LISTEN LIVE</button>
-        <div class="links strobe-links">
-          <a href="https://www.facebook.com/thestroberadio" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://sites.google.com/view/djperryradio/the-strobe-radio" target="_blank" rel="noopener">Website</a>
-        </div>
-      </div>
-    </article>
+      </article>
+    </section>
 
-    <article class="station-card pulse-card">
-      <img src="pulse107-logo.jpg" alt="Pulse 107 logo" class="station-logo">
-      <div class="station-info">
-        <h1>PULSE 107</h1>
-        <p>House<br>NuDisco<br>Electronica<br>Dance</p>
-        <div class="now-playing">
-          <span>NOW PLAYING</span>
-          <strong id="np-pulse">Loading song info…</strong>
-        </div>
-        <button class="listen pulse" data-station="pulse">▶ LISTEN LIVE</button>
-        <div class="links pulse-links">
-          <a href="https://www.facebook.com/pulse107" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://sites.google.com/view/djperryradio/pulse-107" target="_blank" rel="noopener">Website</a>
-        </div>
-      </div>
-    </article>
+    <section id="schedule" class="page-section schedule-section">
+      <h2>SHOW SCHEDULE</h2>
+      <div class="schedule-item"><strong>DJ Perry's Old School Mix</strong><span>Daily • 11 AM &amp; 7 PM PT</span><em>Listen on The Strobe Radio</em></div>
+      <div class="schedule-item"><strong>DJ Perry's House Sessions</strong><span>Mon–Thu 5:30 PM PT • Fri/Sat 4:30 PM PT</span><em>Listen on Pulse 107</em></div>
+      <div class="schedule-item"><strong>Wayback Wednesdays</strong><span>All day Wednesday</span><em>Listen on DJ Perry Radio</em></div>
+      <div class="schedule-item"><strong>Saturday Night Retro Dance Party</strong><span>Saturday • 5 PM–Midnight PT</span><em>Listen on DJ Perry Radio</em></div>
+      <div class="schedule-item"><strong>90s Dance Lunch Party</strong><span>Fridays • 11 AM–2 PM PT</span><em>Listen on Pulse 107</em></div>
+      <div class="schedule-item"><strong>Fridays @ Your Mom's &amp; Saturdays @ Your Sister's</strong><span>Fridays &amp; Saturdays • 4:30 PM–1 AM PT</span><em>Listen on Pulse 107</em></div>
+      <div class="schedule-item"><strong>Energy Sundays</strong><span>Sundays • All day</span><em>Listen on Pulse 107</em></div>
+    </section>
 
-  </section>
+    <section id="about" class="page-section">
+      <h2>ABOUT</h2>
+      <p>Listen to DJ Perry Radio, The Strobe Radio, and Pulse 107 in one app.</p>
+      <a class="donate-button" href="https://www.paypal.com/donate/?hosted_button_id=RFGJX2ZR9FNNC" target="_blank" rel="noopener">Donate with PayPal</a>
+    </section>
+  </main>
 
-  <section id="schedule" class="page-section">
-    <h2>Show Schedule</h2>
-    <div class="schedule-item"><strong>DJ Perry's Old School Mix</strong><span>Daily • 11 AM &amp; 7 PM PT</span></div>
-    <div class="schedule-item"><strong>DJ Perry's House Sessions</strong><span>Mon–Thu 5:30 PM PT • Fri/Sat 4:30 PM PT</span></div>
-    <div class="schedule-item"><strong>Wayback Wednesdays</strong><span>All day Wednesday</span></div>
-    <div class="schedule-item"><strong>Saturday Night Retro Dance Party</strong><span>Saturday • 5 PM–Midnight PT</span></div>
-  </section>
-
-  <section id="about" class="page-section">
-    <h2>About</h2>
-    <p>One app for DJ Perry Radio, The Strobe Radio, and Pulse 107. Choose any station and listen live.</p>
-  </section>
-
-  <footer class="bottom-nav">
-    <a href="#stations">⌂<span>Stations</span></a>
-    <a href="#schedule">▣<span>Show Schedule</span></a>
-    <a href="https://hearthis.at/htlhmdjc/" target="_blank" rel="noopener">♪<span>Mixes</span></a>
-    <a href="#about">ⓘ<span>About</span></a>
-    <a href="https://sites.google.com/view/djperryradio" target="_blank" rel="noopener">✉<span>Contact</span></a>
-  </footer>
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="#stations" class="active"><span class="nav-icon">⌂</span><span>STATIONS</span></a>
+    <a href="#schedule"><span class="nav-icon">▣</span><span>SHOW<br>SCHEDULE</span></a>
+    <a href="https://hearthis.at/htlhmdjc/" target="_blank" rel="noopener"><span class="nav-icon">♬</span><span>MIXES</span></a>
+    <a href="#about"><span class="nav-icon">ⓘ</span><span>ABOUT</span></a>
+    <a href="mailto:djperry76@hotmail.com?subject=DJ%20Perry%20Radio%20Contact"><span class="nav-icon">✉</span><span>CONTACT</span></a>
+  </nav>
 
   <aside id="drawer" class="drawer" aria-hidden="true">
-    <div class="drawer-head"><span>Menu</span><button id="closeMenu">×</button></div>
-    <a href="#stations">⌂ <span>Stations</span></a>
-    <a href="#schedule">▣ <span>Show Schedule</span></a>
-    <a href="https://hearthis.at/htlhmdjc/" target="_blank" rel="noopener">♪ <span>Mixes</span></a>
-    <a href="#about">ⓘ <span>About</span></a>
-    <a href="https://sites.google.com/view/djperryradio" target="_blank" rel="noopener">✉ <span>Contact</span></a>
+    <div class="drawer-head"><button id="closeMenu" aria-label="Close menu">×</button></div>
+    <a href="#stations" class="selected"><span>⌂</span> Stations</a>
+    <a href="#schedule"><span>▣</span> Show Schedule</a>
+    <a href="https://hearthis.at/htlhmdjc/" target="_blank" rel="noopener"><span>♬</span> Mixes</a>
+    <a href="https://www.facebook.com/djperry.net" target="_blank" rel="noopener"><span class="menu-f">f</span> Facebook</a>
+    <a href="#about"><span>ⓘ</span> About</a>
+    <a href="mailto:djperry76@hotmail.com?subject=DJ%20Perry%20Radio%20Contact"><span>✉</span> Contact</a>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=RFGJX2ZR9FNNC" target="_blank" rel="noopener"><span>♥</span> Donate</a>
   </aside>
-
   <div id="scrim" class="scrim"></div>
-
-  <div id="playerBar" class="player-bar" hidden>
-    <div>
-      <strong id="currentStation">DJ Perry Radio</strong>
-      <span id="currentTrack">Loading song info…</span>
-      <span id="playerStatus">Connecting…</span>
-    </div>
-    <button id="pauseButton" aria-label="Pause or resume">❚❚</button>
-  </div>
-
 
   <div id="installModal" class="install-modal" hidden>
     <div class="install-modal-card" role="dialog" aria-modal="true" aria-labelledby="installModalTitle">
@@ -131,6 +110,11 @@
     </div>
   </div>
 
+  <div id="playerBar" class="player-bar" hidden>
+    <div><strong id="currentStation"></strong><span id="currentTrack">Waiting for song information…</span><span id="playerStatus"></span></div>
+    <button id="pauseButton" aria-label="Pause or resume">❚❚</button>
+  </div>
+
   <audio id="audio" preload="none" playsinline></audio>
 
   <div class="metadata-iframes" aria-hidden="true">
@@ -138,7 +122,7 @@
     <iframe src="metadata-strobe.html" title="Strobe metadata"></iframe>
     <iframe src="metadata-pulse.html" title="Pulse metadata"></iframe>
   </div>
-</main>
+</div>
 <script src="app.js"></script>
 </body>
 </html>
