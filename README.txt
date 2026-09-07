@@ -20,3 +20,23 @@ GITHUB
 Extract this ZIP and upload ALL individual files to the ROOT of:
 https://github.com/djperryradio/dj-perry-radio-app
 Replace matching files and commit. Keep GitHub Pages set to main / root.
+
+
+THREE BRANDED ENTRY LINKS
+
+DJ PERRY RADIO
+https://djperryradio.github.io/dj-perry-radio-app/
+
+PULSE 107
+https://djperryradio.github.io/dj-perry-radio-app/pulse/
+
+THE STROBE RADIO
+https://djperryradio.github.io/dj-perry-radio-app/strobe/
+
+Pulse 107 opens with Pulse first and installs with Pulse 107 branding/icon.
+The Strobe Radio opens with Strobe first and installs with Strobe branding/icon.
+The main app remains DJ Perry Radio first.
+
+All three versions still include all three stations and the same player,
+Now Playing metadata, schedules, Facebook/Website buttons, Contact,
+Donate, Install App, Bluetooth metadata, and one-stream-at-a-time behavior.
