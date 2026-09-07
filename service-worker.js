@@ -1,5 +1,5 @@
 
-const CACHE = "dj-perry-radio-shared-core-v10-bottomnav-v11";
+const CACHE = "dj-perry-radio-shared-core-v10-bottomnav-v12";
 const CORE = [
   "./style.css",
   "./app.js",
