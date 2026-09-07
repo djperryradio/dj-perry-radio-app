@@ -1,9 +1,9 @@
 {
-  "id": "./",
+  "id": "/dj-perry-radio-app/",
   "name": "DJ Perry Radio",
   "short_name": "DJ Perry Radio",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/dj-perry-radio-app/",
+  "scope": "/dj-perry-radio-app/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
