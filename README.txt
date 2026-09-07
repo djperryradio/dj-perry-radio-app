@@ -29,3 +29,10 @@ AUTOMATIC UPDATES
 WHEN REINSTALLING MAY STILL BE NEEDED
 - If you change the installed app identity, icon, or manifest name and a device keeps the old icon/name.
 - If a browser has an unusually stubborn old PWA cache.
+
+
+BOTTOM NAV FIX
+- Restored the five bottom navigation buttons.
+- Forced the nav above page content and player with a high z-index.
+- Added enough bottom padding so the page cannot cover the nav.
+- Added cache-busting so phones and installed PWAs fetch the new CSS immediately.
