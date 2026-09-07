@@ -1,9 +1,9 @@
 {
-  "id": "./strobe/",
+  "id": "/dj-perry-radio-app/strobe/",
   "name": "The Strobe Radio",
   "short_name": "Strobe Radio",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/dj-perry-radio-app/strobe/",
+  "scope": "/dj-perry-radio-app/strobe/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#008df0",
