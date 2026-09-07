@@ -5,12 +5,14 @@ const stations = {
     target: "np-dj",
     logo: "djperry-logo.png"
   },
+
   strobe: {
     name: "The Strobe Radio",
     stream: "https://audio.cloudrad.io/ac7b42b9/live",
     target: "np-strobe",
     logo: "strobe-logo.jpg"
   },
+
   pulse: {
     name: "Pulse 107",
     stream: "https://audio.cloudrad.io/c80559c5/live",
@@ -19,16 +21,34 @@ const stations = {
   }
 };
 
+
 const audio = document.getElementById("audio");
-const buttons = [...document.querySelectorAll(".listen")];
-const playerBar = document.getElementById("playerBar");
-const currentStation = document.getElementById("currentStation");
-const currentTrack = document.getElementById("currentTrack");
-const playerStatus = document.getElementById("playerStatus");
-const pauseButton = document.getElementById("pauseButton");
-const playerLogo = document.getElementById("playerLogo");
+
+const buttons = [
+  ...document.querySelectorAll(".listen")
+];
+
+const playerBar =
+  document.getElementById("playerBar");
+
+const currentStation =
+  document.getElementById("currentStation");
+
+const currentTrack =
+  document.getElementById("currentTrack");
+
+const playerStatus =
+  document.getElementById("playerStatus");
+
+const pauseButton =
+  document.getElementById("pauseButton");
+
+const playerLogo =
+  document.getElementById("playerLogo");
+
 
 let currentKey = null;
+
 let switchToken = 0;
 
 const metadata = {
@@ -37,233 +57,625 @@ const metadata = {
   pulse: ""
 };
 
-function setButtonState(key, playing) {
-  buttons.forEach((b) => {
-    const on = playing && b.dataset.station === key;
-    b.classList.toggle("playing", on);
-    b.innerHTML = on
-      ? "<b>PLAYING</b>"
-      : "<b>LISTEN LIVE</b>";
-  });
+
+/* =========================================
+   GOATCOUNTER ANALYTICS
+========================================= */
+
+const analyticsQueue = [];
+
+
+/*
+  Determines which version of the app
+  the listener entered through.
+*/
+
+function getAppEntry() {
+
+  if (/\/pulse\/?$/.test(location.pathname)) {
+    return "pulse";
+  }
+
+  if (/\/strobe\/?$/.test(location.pathname)) {
+    return "strobe";
+  }
+
+  return "dj";
 }
 
-function setPlayerControl(state) {
-  if (!pauseButton) return;
 
-  if (state === "playing") {
-    pauseButton.innerHTML = "&#10074;&#10074;";
-    pauseButton.setAttribute("aria-label", "Pause");
-    pauseButton.title = "Pause";
-  } else if (state === "paused") {
-    pauseButton.innerHTML = "&#9654;";
-    pauseButton.setAttribute("aria-label", "Play");
-    pauseButton.title = "Play";
+/*
+  Sends a custom event to GoatCounter.
+
+  If GoatCounter hasn't finished loading yet,
+  the event is temporarily stored and sent later.
+*/
+
+function trackEvent(path, title) {
+
+  const eventData = {
+    path: path,
+    title: title,
+    event: true,
+    no_session: true
+  };
+
+  if (
+    window.goatcounter &&
+    typeof window.goatcounter.count === "function"
+  ) {
+
+    window.goatcounter.count(eventData);
+
   } else {
-    pauseButton.textContent = "";
-    pauseButton.setAttribute("aria-label", "Play");
-    pauseButton.title = "Play";
+
+    analyticsQueue.push(eventData);
   }
 }
 
-function fullyStopAudio() {
-  audio.pause();
-  audio.removeAttribute("src");
-  audio.load();
-  setButtonState(null, false);
+
+/*
+  Sends any events that occurred before
+  GoatCounter finished loading.
+*/
+
+function flushAnalyticsQueue() {
+
+  if (
+    !window.goatcounter ||
+    typeof window.goatcounter.count !== "function"
+  ) {
+    return false;
+  }
+
+  while (analyticsQueue.length) {
+
+    const eventData =
+      analyticsQueue.shift();
+
+    window.goatcounter.count(
+      eventData
+    );
+  }
+
+  return true;
 }
+
+
+/*
+  Give GoatCounter time to load if it was
+  downloaded after app.js.
+*/
+
+window.addEventListener("load", () => {
+
+  let attempts = 0;
+
+  const analyticsTimer =
+    setInterval(() => {
+
+      attempts++;
+
+      if (
+        flushAnalyticsQueue() ||
+        attempts >= 20
+      ) {
+        clearInterval(
+          analyticsTimer
+        );
+      }
+
+    }, 500);
+
+});
+
+
+/* =========================================
+   STATION BUTTON STATES
+========================================= */
+
+function setButtonState(
+  key,
+  playing
+) {
+
+  buttons.forEach((b) => {
+
+    const on =
+      playing &&
+      b.dataset.station === key;
+
+    b.classList.toggle(
+      "playing",
+      on
+    );
+
+    b.innerHTML =
+      on
+        ? "<b>PLAYING</b>"
+        : "<b>LISTEN LIVE</b>";
+  });
+}
+
+
+/* =========================================
+   SHARED PLAY / PAUSE CONTROL
+========================================= */
+
+function setPlayerControl(state) {
+
+  if (!pauseButton) return;
+
+
+  if (state === "playing") {
+
+    pauseButton.innerHTML =
+      "&#10074;&#10074;";
+
+    pauseButton.setAttribute(
+      "aria-label",
+      "Pause"
+    );
+
+    pauseButton.title =
+      "Pause";
+
+  }
+
+  else if (state === "paused") {
+
+    pauseButton.innerHTML =
+      "&#9654;";
+
+    pauseButton.setAttribute(
+      "aria-label",
+      "Play"
+    );
+
+    pauseButton.title =
+      "Play";
+
+  }
+
+  else {
+
+    pauseButton.textContent =
+      "";
+
+    pauseButton.setAttribute(
+      "aria-label",
+      "Play"
+    );
+
+    pauseButton.title =
+      "Play";
+  }
+}
+
+
+/* =========================================
+   STOP CURRENT STREAM
+========================================= */
+
+function fullyStopAudio() {
+
+  audio.pause();
+
+  audio.removeAttribute(
+    "src"
+  );
+
+  audio.load();
+
+  setButtonState(
+    null,
+    false
+  );
+}
+
+
+/* =========================================
+   PLAYER STATION LOGO
+========================================= */
 
 function updatePlayerLogo(key) {
-  if (!playerLogo || !stations[key]) return;
 
-  playerLogo.src = baseAsset(stations[key].logo);
-  playerLogo.alt = stations[key].name + " logo";
+  if (
+    !playerLogo ||
+    !stations[key]
+  ) {
+    return;
+  }
+
+  playerLogo.src =
+    baseAsset(
+      stations[key].logo
+    );
+
+  playerLogo.alt =
+    stations[key].name +
+    " logo";
 }
+
+
+/* =========================================
+   HIDE SHARED PLAYER
+========================================= */
 
 function hidePlayer() {
+
   currentKey = null;
-  setPlayerControl("stopped");
-  playerBar.hidden = true;
+
+  setPlayerControl(
+    "stopped"
+  );
+
+  playerBar.hidden =
+    true;
 }
 
+
+/* =========================================
+   PLAY STATION
+========================================= */
+
 async function playStation(key) {
-  const s = stations[key];
+
+  const s =
+    stations[key];
+
   if (!s) return;
+
+
+  /*
+    If the same station is already playing,
+    this click pauses it.
+
+    We do NOT count that as another
+    Listen Live event.
+  */
 
   if (
     currentKey === key &&
     !audio.paused &&
     audio.src
   ) {
+
     audio.pause();
 
-    playerStatus.textContent = "Paused";
-    setPlayerControl("paused");
-    setButtonState(key, false);
+    playerStatus.textContent =
+      "Paused";
+
+    setPlayerControl(
+      "paused"
+    );
+
+    setButtonState(
+      key,
+      false
+    );
+
     updateMediaSession();
 
     return;
   }
 
-  const token = ++switchToken;
+
+  /*
+    Count a new attempt to listen
+    to this station.
+  */
+
+  trackEvent(
+    "listen-" + key,
+    "Listen Live - " + s.name
+  );
+
+
+  const token =
+    ++switchToken;
+
+
+  /*
+    Always stop the previous stream
+    before starting another.
+  */
 
   fullyStopAudio();
 
-  currentKey = key;
 
-  updatePlayerLogo(key);
+  currentKey =
+    key;
 
-  currentStation.textContent = s.name;
+
+  updatePlayerLogo(
+    key
+  );
+
+
+  currentStation.textContent =
+    s.name;
+
 
   currentTrack.textContent =
     metadata[key] ||
     "Waiting for song information...";
 
-  playerStatus.textContent = "Connecting...";
 
-  setPlayerControl("paused");
+  playerStatus.textContent =
+    "Connecting...";
 
-  playerBar.hidden = false;
 
-  audio.src = s.stream;
+  setPlayerControl(
+    "paused"
+  );
+
+
+  playerBar.hidden =
+    false;
+
+
+  audio.src =
+    s.stream;
+
 
   try {
+
     await audio.play();
+
+
+    /*
+      Prevent an older stream request
+      from taking over after the user
+      has already changed stations.
+    */
 
     if (
       token !== switchToken ||
       currentKey !== key
     ) {
+
       fullyStopAudio();
+
       return;
     }
 
-    playerStatus.textContent = "Streaming live";
 
-    setPlayerControl("playing");
+    playerStatus.textContent =
+      "Streaming live";
 
-    setButtonState(key, true);
+
+    setPlayerControl(
+      "playing"
+    );
+
+
+    setButtonState(
+      key,
+      true
+    );
+
 
     updateMediaSession();
 
-  } catch (e) {
+  }
+
+  catch (e) {
+
     playerStatus.textContent =
       "Tap LISTEN LIVE to try again";
 
-    setPlayerControl("paused");
 
-    setButtonState(key, false);
+    setPlayerControl(
+      "paused"
+    );
+
+
+    setButtonState(
+      key,
+      false
+    );
+
 
     updateMediaSession();
   }
 }
 
+
+/* =========================================
+   STATION LISTEN BUTTONS
+========================================= */
+
 buttons.forEach((b) => {
+
   b.addEventListener(
     "click",
-    () => playStation(b.dataset.station)
+    () =>
+      playStation(
+        b.dataset.station
+      )
   );
+
 });
+
+
+/* =========================================
+   SHARED PLAY / PAUSE BUTTON
+========================================= */
 
 pauseButton.addEventListener(
   "click",
   async () => {
 
-    if (!currentKey) return;
+    if (!currentKey) {
+      return;
+    }
+
 
     if (!audio.paused) {
 
       audio.pause();
 
-      playerStatus.textContent = "Paused";
 
-      setPlayerControl("paused");
+      playerStatus.textContent =
+        "Paused";
 
-      setButtonState(currentKey, false);
+
+      setPlayerControl(
+        "paused"
+      );
+
+
+      setButtonState(
+        currentKey,
+        false
+      );
+
 
       updateMediaSession();
+
 
       return;
     }
 
-    if (!audio.getAttribute("src")) {
+
+    if (
+      !audio.getAttribute(
+        "src"
+      )
+    ) {
+
       audio.src =
-        stations[currentKey].stream;
+        stations[
+          currentKey
+        ].stream;
     }
+
 
     try {
 
       await audio.play();
 
+
       playerStatus.textContent =
         "Streaming live";
 
-      setPlayerControl("playing");
+
+      setPlayerControl(
+        "playing"
+      );
+
 
       setButtonState(
         currentKey,
         true
       );
 
+
       updateMediaSession();
 
-    } catch (e) {
+    }
+
+    catch (e) {
 
       playerStatus.textContent =
         "Tap LISTEN LIVE to try again";
 
-      setPlayerControl("paused");
+
+      setPlayerControl(
+        "paused"
+      );
+
 
       updateMediaSession();
     }
   }
 );
+
+
+/* =========================================
+   CLOUDRADIO METADATA
+========================================= */
 
 window.addEventListener(
   "message",
   (e) => {
 
-    if (e.origin !== location.origin) return;
+    if (
+      e.origin !==
+      location.origin
+    ) {
+      return;
+    }
 
-    const d = e.data || {};
+
+    const d =
+      e.data || {};
+
 
     if (
       d.type !==
         "cloudradio-now-playing" ||
       !stations[d.station] ||
-      typeof d.text !== "string"
+      typeof d.text !==
+        "string"
     ) {
       return;
     }
 
-    const text = d.text.trim();
 
-    if (!text) return;
+    const text =
+      d.text.trim();
 
-    metadata[d.station] = text;
+
+    if (!text) {
+      return;
+    }
+
+
+    metadata[d.station] =
+      text;
+
 
     const target =
       document.getElementById(
-        stations[d.station].target
+        stations[
+          d.station
+        ].target
       );
 
+
     if (target) {
-      target.textContent = text;
+
+      target.textContent =
+        text;
     }
 
+
     if (
-      currentKey === d.station
+      currentKey ===
+      d.station
     ) {
+
       currentTrack.textContent =
         text;
+
 
       updateMediaSession();
     }
   }
 );
 
+
+/* =========================================
+   SONG TITLE / ARTIST
+========================================= */
+
 function parseTrack(raw) {
 
-  raw = (raw || "").trim();
+  raw =
+    (raw || "").trim();
+
 
   const separators = [
     " - ",
@@ -271,62 +683,104 @@ function parseTrack(raw) {
     " — "
   ];
 
-  for (const sep of separators) {
+
+  for (
+    const sep
+    of separators
+  ) {
 
     const i =
-      raw.indexOf(sep);
+      raw.indexOf(
+        sep
+      );
+
 
     if (i > 0) {
 
       return {
+
         artist:
-          raw.slice(0, i).trim(),
+          raw
+            .slice(
+              0,
+              i
+            )
+            .trim(),
 
         title:
-          raw.slice(
-            i + sep.length
-          ).trim()
+          raw
+            .slice(
+              i +
+              sep.length
+            )
+            .trim()
       };
     }
   }
 
+
   return {
+
     artist:
       currentKey
-        ? stations[currentKey].name
+        ? stations[
+            currentKey
+          ].name
         : "DJ Perry Radio",
 
     title:
-      raw || "Live Stream"
+      raw ||
+      "Live Stream"
   };
 }
+
+
+/* =========================================
+   MEDIA SESSION
+========================================= */
 
 function updateMediaSession() {
 
   if (
     !currentKey ||
-    !("mediaSession" in navigator) ||
-    !("MediaMetadata" in window)
+    !(
+      "mediaSession"
+      in navigator
+    ) ||
+    !(
+      "MediaMetadata"
+      in window
+    )
   ) {
     return;
   }
 
+
   const p =
     parseTrack(
-      metadata[currentKey]
+      metadata[
+        currentKey
+      ]
     );
 
+
   const station =
-    stations[currentKey];
+    stations[
+      currentKey
+    ];
+
 
   navigator.mediaSession.metadata =
     new MediaMetadata({
 
-      title: p.title,
+      title:
+        p.title,
 
-      artist: p.artist,
+      artist:
+        p.artist,
 
-      album: station.name,
+      album:
+        station.name,
 
       artwork: [
         {
@@ -338,57 +792,86 @@ function updateMediaSession() {
       ]
     });
 
+
   try {
 
-    navigator.mediaSession.playbackState =
-      audio.paused
-        ? "paused"
-        : "playing";
+    navigator
+      .mediaSession
+      .playbackState =
+        audio.paused
+          ? "paused"
+          : "playing";
 
-  } catch (e) {}
+  }
+
+  catch (e) {}
 }
+
+
+/* =========================================
+   AUDIO EVENTS
+========================================= */
 
 audio.addEventListener(
   "play",
   () => {
 
     if (currentKey) {
+
       setPlayerControl(
         "playing"
       );
     }
 
+
     updateMediaSession();
   }
 );
+
 
 audio.addEventListener(
   "pause",
   () => {
 
     if (currentKey) {
+
       setPlayerControl(
         "paused"
       );
     }
 
+
     updateMediaSession();
   }
 );
 
-if ("mediaSession" in navigator) {
+
+/* =========================================
+   MEDIA SESSION CONTROLS
+========================================= */
+
+if (
+  "mediaSession"
+  in navigator
+) {
 
   try {
 
-    navigator.mediaSession
+    navigator
+      .mediaSession
       .setActionHandler(
         "play",
         async () => {
 
-          if (!currentKey) return;
+          if (!currentKey) {
+            return;
+          }
+
 
           if (
-            !audio.getAttribute("src")
+            !audio.getAttribute(
+              "src"
+            )
           ) {
 
             audio.src =
@@ -397,80 +880,107 @@ if ("mediaSession" in navigator) {
               ].stream;
           }
 
+
           try {
 
             await audio.play();
 
+
             playerStatus.textContent =
               "Streaming live";
+
 
             setPlayerControl(
               "playing"
             );
+
 
             setButtonState(
               currentKey,
               true
             );
 
+
             updatePlayerLogo(
               currentKey
             );
 
+
             updateMediaSession();
 
-          } catch (e) {}
+          }
+
+          catch (e) {}
         }
       );
 
-    navigator.mediaSession
+
+    navigator
+      .mediaSession
       .setActionHandler(
         "pause",
         () => {
 
           audio.pause();
 
+
           playerStatus.textContent =
             "Paused";
+
 
           setPlayerControl(
             "paused"
           );
+
 
           setButtonState(
             currentKey,
             false
           );
 
+
           updateMediaSession();
         }
       );
 
-    navigator.mediaSession
+
+    navigator
+      .mediaSession
       .setActionHandler(
         "stop",
         () => {
 
           ++switchToken;
 
+
           fullyStopAudio();
+
 
           hidePlayer();
         }
       );
 
-  } catch (e) {}
+  }
+
+  catch (e) {}
 }
+
+
+/* =========================================
+   SIDE MENU
+========================================= */
 
 const drawer =
   document.getElementById(
     "drawer"
   );
 
+
 const scrim =
   document.getElementById(
     "scrim"
   );
+
 
 function closeDrawer() {
 
@@ -478,15 +988,18 @@ function closeDrawer() {
     "open"
   );
 
+
   scrim.classList.remove(
     "show"
   );
+
 
   drawer.setAttribute(
     "aria-hidden",
     "true"
   );
 }
+
 
 document.getElementById(
   "menuButton"
@@ -496,9 +1009,11 @@ document.getElementById(
     "open"
   );
 
+
   scrim.classList.add(
     "show"
   );
+
 
   drawer.setAttribute(
     "aria-hidden",
@@ -506,13 +1021,16 @@ document.getElementById(
   );
 };
 
+
 document.getElementById(
   "closeMenu"
 ).onclick =
   closeDrawer;
 
+
 scrim.onclick =
   closeDrawer;
+
 
 document
   .querySelectorAll(
@@ -526,33 +1044,47 @@ document
     );
   });
 
+
+/* =========================================
+   INSTALL APP
+========================================= */
+
 let deferredInstallPrompt =
   null;
+
 
 const installButton =
   document.getElementById(
     "installAppButton"
   );
 
+
 const installModal =
   document.getElementById(
     "installModal"
   );
+
 
 const installInstructions =
   document.getElementById(
     "installInstructions"
   );
 
+
 function standalone() {
 
   return (
+
     matchMedia(
       "(display-mode: standalone)"
     ).matches ||
-    navigator.standalone === true
+
+    navigator.standalone ===
+      true
+
   );
 }
+
 
 function isiOS() {
 
@@ -562,35 +1094,87 @@ function isiOS() {
     );
 }
 
+
+/*
+  Android / Chromium install prompt
+*/
+
 window.addEventListener(
   "beforeinstallprompt",
   (e) => {
 
     e.preventDefault();
 
-    deferredInstallPrompt = e;
+    deferredInstallPrompt =
+      e;
   }
 );
+
+
+/*
+  Browser confirms installation.
+*/
 
 window.addEventListener(
   "appinstalled",
   () => {
 
-    deferredInstallPrompt = null;
+    const entry =
+      getAppEntry();
 
-    installButton.hidden = true;
+
+    trackEvent(
+      "install-confirmed-" +
+        entry,
+
+      "Confirmed Install - " +
+        entry.toUpperCase()
+    );
+
+
+    deferredInstallPrompt =
+      null;
+
+
+    installButton.hidden =
+      true;
   }
 );
+
+
+/*
+  Install App button
+*/
 
 installButton.onclick =
   async () => {
 
+    const entry =
+      getAppEntry();
+
+
+    /*
+      Count every Install App
+      button press.
+    */
+
+    trackEvent(
+      "install-click-" +
+        entry,
+
+      "Install App Click - " +
+        entry.toUpperCase()
+    );
+
+
     if (standalone()) {
 
-      installButton.hidden = true;
+      installButton.hidden =
+        true;
 
       return;
     }
+
 
     if (
       deferredInstallPrompt
@@ -599,27 +1183,37 @@ installButton.onclick =
       deferredInstallPrompt
         .prompt();
 
+
       try {
 
         await deferredInstallPrompt
           .userChoice;
 
-      } catch (e) {}
+      }
+
+      catch (e) {}
+
 
       deferredInstallPrompt =
         null;
 
+
       return;
     }
 
+
     installInstructions.innerHTML =
       isiOS()
+
         ? "<p>On iPhone or iPad:</p><ol><li>Open this page in <strong>Safari</strong>.</li><li>Tap <strong>Share</strong>.</li><li>Choose <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong>.</li></ol>"
+
         : "<p>On Android:</p><ol><li>Open this page in <strong>Chrome</strong>.</li><li>Open the browser menu.</li><li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li></ol>";
+
 
     installModal.hidden =
       false;
   };
+
 
 document.getElementById(
   "closeInstallModal"
@@ -629,6 +1223,7 @@ document.getElementById(
     true;
 };
 
+
 installModal.onclick =
   (e) => {
 
@@ -636,10 +1231,12 @@ installModal.onclick =
       e.target ===
       installModal
     ) {
+
       installModal.hidden =
         true;
     }
   };
+
 
 if (standalone()) {
 
@@ -647,11 +1244,19 @@ if (standalone()) {
     true;
 }
 
+
+/* =========================================
+   ROOT / BRANDED PAGE PATHS
+========================================= */
+
 function isBrandedSubpage() {
 
   return /\/(pulse|strobe)\/?$/
-    .test(location.pathname);
+    .test(
+      location.pathname
+    );
 }
+
 
 function baseAsset(filename) {
 
@@ -660,8 +1265,14 @@ function baseAsset(filename) {
     : filename;
 }
 
+
+/* =========================================
+   SERVICE WORKER
+========================================= */
+
 if (
-  "serviceWorker" in navigator
+  "serviceWorker"
+  in navigator
 ) {
 
   window.addEventListener(
@@ -672,23 +1283,34 @@ if (
 
         const swUrl =
           isBrandedSubpage()
+
             ? "../service-worker.js"
+
             : "./service-worker.js";
+
 
         const reg =
           await navigator
             .serviceWorker
-            .register(swUrl);
+            .register(
+              swUrl
+            );
+
 
         reg.update();
 
-        if (reg.waiting) {
 
-          reg.waiting.postMessage({
-            type:
-              "SKIP_WAITING"
-          });
+        if (
+          reg.waiting
+        ) {
+
+          reg.waiting
+            .postMessage({
+              type:
+                "SKIP_WAITING"
+            });
         }
+
 
         reg.addEventListener(
           "updatefound",
@@ -697,7 +1319,11 @@ if (
             const nw =
               reg.installing;
 
-            if (!nw) return;
+
+            if (!nw) {
+              return;
+            }
+
 
             nw.addEventListener(
               "statechange",
@@ -706,6 +1332,7 @@ if (
                 if (
                   nw.state ===
                     "installed" &&
+
                   navigator
                     .serviceWorker
                     .controller
@@ -721,23 +1348,34 @@ if (
           }
         );
 
-      } catch (e) {
+      }
+
+      catch (e) {
 
         console.error(e);
       }
     }
   );
 
-  let refreshing = false;
 
-  navigator.serviceWorker
+  let refreshing =
+    false;
+
+
+  navigator
+    .serviceWorker
     .addEventListener(
       "controllerchange",
       () => {
 
-        if (refreshing) return;
+        if (refreshing) {
+          return;
+        }
 
-        refreshing = true;
+
+        refreshing =
+          true;
+
 
         location.reload();
       }
