@@ -1,9 +1,9 @@
 {
-  "id": "./pulse/",
+  "id": "/dj-perry-radio-app/pulse/",
   "name": "Pulse 107",
   "short_name": "Pulse 107",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/dj-perry-radio-app/pulse/",
+  "scope": "/dj-perry-radio-app/pulse/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00c74d",
