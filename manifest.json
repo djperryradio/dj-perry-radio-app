@@ -1,24 +1,23 @@
 {
-  "name": "DJ Perry Radio",
-  "short_name": "DJ Perry",
-  "description": "Listen to DJ Perry Radio, The Strobe Radio, and Pulse 107 with live Now Playing information.",
+  "name": "The Strobe Radio",
+  "short_name": "Strobe Radio",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#000000",
+  "theme_color": "#008df0",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
