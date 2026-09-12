@@ -672,6 +672,12 @@ body{
 /* SMALL PHONES */
 
 @media(max-width:390px){
+  .bottom-nav a{
+    font-size:10px;
+    padding-left:2px;
+    padding-right:2px;
+  }
+}
 
   .station-card{
     grid-template-columns:
