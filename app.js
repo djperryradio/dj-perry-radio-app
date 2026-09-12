@@ -845,7 +845,68 @@ audio.addEventListener(
   }
 );
 
+/* =========================================
+   NEXT / PREVIOUS STATION
+========================================= */
 
+function nextStation() {
+
+  const order = [
+    "dj",
+    "strobe",
+    "pulse"
+  ];
+
+  let index =
+    order.indexOf(currentKey);
+
+  if (index === -1) {
+
+    index = 0;
+
+  } else {
+
+    index =
+      (index + 1) %
+      order.length;
+  }
+
+  playStation(
+    order[index]
+  );
+}
+
+
+function previousStation() {
+
+  const order = [
+    "dj",
+    "strobe",
+    "pulse"
+  ];
+
+  let index =
+    order.indexOf(currentKey);
+
+  if (index === -1) {
+
+    index = 0;
+
+  } else {
+
+    index =
+      (
+        index -
+        1 +
+        order.length
+      ) %
+      order.length;
+  }
+
+  playStation(
+    order[index]
+  );
+}
 /* =========================================
    MEDIA SESSION CONTROLS
 ========================================= */
@@ -862,7 +923,30 @@ if (
       .setActionHandler(
         "play",
         async () => {
+try {
 
+  navigator.mediaSession.setActionHandler(
+    "nexttrack",
+    () => {
+
+      nextStation();
+    }
+  );
+
+} catch (e) {}
+
+
+try {
+
+  navigator.mediaSession.setActionHandler(
+    "previoustrack",
+    () => {
+
+      previousStation();
+    }
+  );
+
+} catch (e) {}
           if (!currentKey) {
             return;
           }
@@ -920,7 +1004,30 @@ if (
       .setActionHandler(
         "pause",
         () => {
+try {
 
+  navigator.mediaSession.setActionHandler(
+    "nexttrack",
+    () => {
+
+      nextStation();
+    }
+  );
+
+} catch (e) {}
+
+
+try {
+
+  navigator.mediaSession.setActionHandler(
+    "previoustrack",
+    () => {
+
+      previousStation();
+    }
+  );
+
+} catch (e) {}
           audio.pause();
 
 
@@ -949,7 +1056,30 @@ if (
       .setActionHandler(
         "stop",
         () => {
+try {
 
+  navigator.mediaSession.setActionHandler(
+    "nexttrack",
+    () => {
+
+      nextStation();
+    }
+  );
+
+} catch (e) {}
+
+
+try {
+
+  navigator.mediaSession.setActionHandler(
+    "previoustrack",
+    () => {
+
+      previousStation();
+    }
+  );
+
+} catch (e) {}
           ++switchToken;
 
 
