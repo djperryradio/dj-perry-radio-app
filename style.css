@@ -277,7 +277,7 @@ body{
 
   display:grid;
   grid-template-columns:
-    repeat(5,1fr);
+    repeat(6,1fr);
 
   align-items:stretch;
 
@@ -673,9 +673,9 @@ body{
 
 @media(max-width:390px){
   .bottom-nav a{
-    font-size:10px;
-    padding-left:2px;
-    padding-right:2px;
+    font-size:9px;
+    padding-left:1px;
+    padding-right:1px;
   }
 }
 
